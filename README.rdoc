@@ -1,3 +1,5 @@
 == TIDDER
 
+My first relatively complex Ruby on Rails app, made with help and instructions from the brilliant people at https://infinum.co/
+
 Ruby version: 2.2.2
