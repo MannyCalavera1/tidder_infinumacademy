@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tidder: by Filip Meštrović</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <% current_user.subreddits.each do |subreddit| %>
+            <li><%= link_to subreddit.name, subreddit_path(subreddit.id) %></li>
+          <% end %>
+            <li><%= link_to '...', subreddits_path %></li>
+        </ul>
+      </div>
+  </nav>
+  <div class="container-fluid">
+    <%= flash[:notice]%>
+    <%= flash[:alert]%>
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/" style="text-decoration: none"><h2><b>Tidder</b></h2></a>
+        <small>
+          <b><span style="color: red">INFINUM</span> STUDENT ACADEMY</b>
+          <br>
+          <span style="letter-spacing: 0.5em">REDDIT CLONE PROJECT</span>
+        </small>
+      </div>
+      <div class="col-md-4">
+        <% if @subreddit.nil? || @subreddit.new_record? %>
+          <h1>frontpage</h1>
+        <% else %>
+          <h1><%= @subreddit.name %></h1>
+          <%= link_to "newest", subreddit_path(@subreddit.id), class: "btn btn-default" %>
+          <%= link_to "trending", subreddit_path(@subreddit.id, order: 'trending'), class: "btn btn-default btn-danger" %>
+        <% end %>
+      </div>
+      <div class="col-md-4" style="border-left: solid red">
+        <% if user_signed_in? %>
+          <p>Logged in as: <%= current_user.nickname %></p>
+        <% else %>
+          <p>Not logged in</p>
+        <% end %>
+        <div class="row">
+          <div class="col-md-6">
+            <% if @enable_new_post%>
+              <%= link_to "new post", new_subreddit_post_path(@subreddit.id), class: "btn btn-default btn-block"%>
+            <% else %>
+              <button class="btn btn-default btn-block disabled">new post</button>
+            <% end %>
+            <%= link_to "new subreddit", new_subreddit_path, class: "btn btn-default btn-block" %>
+          </div>
+          <div class="col-md-6">
+            <%= link_to "settings", user_settings_path, class: "btn btn-default btn-block" %>
+            <% if user_signed_in? %>
+              <%= link_to('logout', destroy_user_session_path, method: :delete, class: "btn btn-default btn-block") %>
+            <% end %>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+
+    <%= yield %>
+  </div>
+</body>
+</html>

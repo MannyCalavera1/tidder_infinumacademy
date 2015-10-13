@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-1">
+    <h2>Some random settings and checkboxes</h2>
+    <%= simple_form_for @user, url: user_path do |form| %>
+      <%= form.input :gender, label: "You are currently #{current_user.gender}. Sex change?", collection: User.genders.keys, as: :radio_buttons %>
+      <%= form.button :submit, "Save settings"%>
+    <% end %>
+  </div>
+  <div class="col-md-3 col-md-offset-1">
+    <%= image_tag current_user.avatar.url(:thumb) %>
+    <%= simple_form_for @user, url: user_path do |form| %>
+      <%= form.input :avatar, as: :file %>
+      <%= form.button :submit, "Update avatar"%>
+    <% end %>
+  </div>
+</div>

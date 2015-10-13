@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-8">
+    <h2><%= @post.title %></h2>
+    <p><%= @post.content %></p>
+
+    <h4><%= comment_info(@post.comments.count) %></h4>
+    <hr>
+
+    <ul>
+      <% @post.comments.order_by_updated.each do |comment| %>
+        <li><%= comment.content %></li>
+      <% end %>
+    </ul>
+    <br><br><br>
+
+    <%= simple_form_for [@post, @comment] do |f| %>
+      <%= f.input :content, label: "Write your comment here"%>
+      <%= f.submit :send, class: 'btn btn-primary'%>
+    <% end %>
+  </div>
+  <div class="col-md-4" style="border-left: solid red">
+    <div class="well" style="border-left: solid red">
+      <% if SubredditSubscription.exists?(user_id: current_user.id, subreddit_id: @subreddit.id)%>
+        <%= link_to 'Unsubscribe', subreddit_subreddit_subscriptions_path(@subreddit.id), class: 'btn btn-lg btn-primary', id: 'sub'+@subreddit.id.to_s, method: :delete, remote: true %>
+      <% else %>
+        <%= link_to 'Subscribe', subreddit_subreddit_subscriptions_path(@subreddit.id), class: 'btn btn-lg btn-default', id: 'sub'+@subreddit.id.to_s, method: :post, remote: true %>
+      <% end %>
+    </div>
+    <h1><b>Description:</b></h1>
+    <%= @subreddit.description %>
+  </div>
