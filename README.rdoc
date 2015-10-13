@@ -1,5 +1,9 @@
 == TIDDER
 
-My first relatively complex Ruby on Rails app, made with help and instructions from the brilliant people at https://infinum.co/
+My first relatively complex Ruby on Rails app, made with instructions and help from the brilliant people at https://infinum.co
+
+Played with parsing Reddit's API, various Gems and learning Ruby and Rails in general.
+
+
 
 Ruby version: 2.2.2
